@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Welcome to News Feed</title>
+
+        <style>
+            input{
+                display:block;
+            }
+
+            div{
+                border: 2px solid black
+            }
+        </style>
+
+    </head>
+
+    <h3>Welcome {{user.firstname}}</h3>
+
+
+    <h3>Add your post</h3>
+    <form action = "{% url 'newsfeed:addPost' %} "  method = "POST">
+        {% csrf_token %}
+        <textarea rows = 15 cols = 200 name = "post"></textarea>
+
+        <input type = "submit" value = "Submit Post!">
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color:red">{{message.message}}</p>
+        {% endfor %}
+    {% endif %}
+
+    
+    {% for post in posts %}
+        <div>
+            <p>{{post.user.firstname}} {{post.user.lastname}} says:</p>
+            <p>{{post.post}}</p>
+            <p>{{post.created_at}}</p>
+            <a href = "{% url 'newsfeed:addLike' id=post.id %}" ><button>Like</button>{{post.likes.all.count}}</a>
+            {% if request.session.user_id == post.user.id %}
+                <a href = "{% url 'newsfeed:deletePost' id=post.id %} "><button>Delete</button></a>  
+                <a href = "{% url 'newsfeed:editPost' id=post.id %} "><button>Edit</button></a>
+            {% endif %} 
+        </div>
+    {% endfor %}
+
+    <a href = "{% url 'loginreg:logout'%} "><button>Logout</button></a>
+</html>

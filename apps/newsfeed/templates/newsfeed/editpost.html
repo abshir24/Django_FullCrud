@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Edit Post</title>
+        <style>
+             input{
+                display:block;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <h3>Edit your post</h3>
+        <form action = "{% url 'newsfeed:updatePost' id=post.id %} "  method = "POST">
+            {% csrf_token %}
+
+            <textarea rows = 15 cols = 200 name = "post">{{post.post}}</textarea>
+
+            <input type = "submit" value = "Submit Post!">
+        </form>
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color:red">{{message.message}}</p>
+            {% endfor %}
+        {% endif %}
+    </body>
+</html>
+
+
+

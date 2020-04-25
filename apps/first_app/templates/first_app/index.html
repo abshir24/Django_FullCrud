@@ -1,0 +1,51 @@
+<html>
+    <body>
+        <style>
+            input{
+                display:block;
+            }
+        </style>
+
+
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color:red">{{message.message}}</p>
+            {% endfor %}
+        {% endif %}
+
+        <h2>Register</h2>
+
+        <form action = "{% url 'loginreg:register' %} " method = "POST">
+            {% csrf_token %}
+            <label>Firstname</label>
+            <input type = "text" name = "firstname">
+
+            <label>Lastname</label>
+            <input type = "text" name = "lastname">
+
+            <label>Email</label>
+            <input type = "text" name = "email">
+
+            <label>Password</label>
+            <input type = "password" name = "password">
+
+            <label>Confirm Password</label>
+            <input type = "password" name = "confirm_password">
+
+            <input type="submit" value = "Register!">
+        </form>
+
+        <h2>Login</h2>
+
+        <form action = "{% url 'loginreg:login' %} " method = "POST">
+            {% csrf_token %}
+            <label>Email</label>
+            <input type = "text" name = "email">
+
+            <label>Password</label>
+            <input type = "password" name = "password">
+
+            <input type="submit" value = "Login!">
+        </form>
+    </body>
+</html>
